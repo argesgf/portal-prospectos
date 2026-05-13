@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { usePlan } from "@/lib/context/plan-context";
 import FlowHeader from "@/components/flow/FlowHeader";
 import StepIndicator from "@/components/flow/StepIndicator";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   ArrowRight, Building2, Home, AlertCircle, MapPin,
@@ -132,12 +131,9 @@ function CatastroForm({
   };
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+    <form
       onSubmit={handleSubmit}
-      className="mt-4 space-y-6"
+      className="anim-fade-in-up mt-4 space-y-6"
       noValidate
     >
       <div>
@@ -217,7 +213,7 @@ function CatastroForm({
         Continuar al resumen
         <ArrowRight size={18} />
       </button>
-    </motion.form>
+    </form>
   );
 }
 

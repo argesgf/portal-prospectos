@@ -6,7 +6,6 @@ import { usePlan } from "@/lib/context/plan-context";
 import FlowHeader from "@/components/flow/FlowHeader";
 import StepIndicator from "@/components/flow/StepIndicator";
 import PlanSummaryCard from "@/components/flow/PlanSummaryCard";
-import { motion } from "framer-motion";
 import {
   User, Mail, Phone, CreditCard, FileText, Building2, MapPin,
   ShieldCheck, CheckCircle2, Home, Layers, ArrowRight,
@@ -66,16 +65,9 @@ export default function ResumenPage() {
   if (confirmed) {
     return (
       <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center text-center py-12 px-6 max-w-md"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-yellow-400 text-white shadow-2xl shadow-blue-600/30 mb-6"
+        <div className="anim-fade-in flex flex-col items-center text-center py-12 px-6 max-w-md">
+          <div
+            className="anim-pop flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-yellow-400 text-white shadow-2xl shadow-blue-600/30 mb-6"
           >
             <CheckCircle2 size={42} />
           </motion.div>
@@ -95,7 +87,7 @@ export default function ResumenPage() {
           >
             Volver al inicio
           </button>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -111,12 +103,7 @@ export default function ResumenPage() {
       <div className="pt-16">
         <div className="mx-auto max-w-2xl px-6 pt-6 pb-16">
           <StepIndicator steps={steps} currentStep={6} />
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-4 space-y-6"
-          >
+          <div className="anim-fade-in-up mt-4 space-y-6">
             <PlanSummaryCard />
 
             <Section title="Datos del contrato">
@@ -226,7 +213,7 @@ export default function ResumenPage() {
             <p className="text-center text-xs text-zinc-400 dark:text-zinc-600">
               Al confirmar, aceptas nuestros términos y condiciones. Sin permanencia forzosa.
             </p>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

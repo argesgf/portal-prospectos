@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { usePlan } from "@/lib/context/plan-context";
 import FlowHeader from "@/components/flow/FlowHeader";
 import StepIndicator from "@/components/flow/StepIndicator";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { PersonaNaturalData, EmpresaData } from "@/lib/mock/data";
 import {
@@ -85,20 +84,12 @@ export default function DatosPage() {
 
 function SuccessView({ tipo, onContinue }: { tipo: "persona" | "empresa"; onContinue: () => void }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="flex flex-col items-center text-center py-12 px-6"
-    >
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-6"
+    <div className="anim-fade-in flex flex-col items-center text-center py-12 px-6">
+      <div
+        className="anim-pop flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-6"
       >
         <CheckCircle2 size={36} />
-      </motion.div>
+      </div>
       <h2 className="text-2xl font-bold text-zinc-900 dark:text-white">Datos registrados correctamente</h2>
       <p className="mt-2 text-zinc-600 dark:text-zinc-400 max-w-md">
         {tipo === "empresa"
@@ -112,7 +103,7 @@ function SuccessView({ tipo, onContinue }: { tipo: "persona" | "empresa"; onCont
         Continuar con dirección
         <ArrowRight size={18} />
       </button>
-    </motion.div>
+    </div>
   );
 }
 
@@ -245,12 +236,9 @@ function DatosForm({
 
   if (tipoUsuario === "persona") {
     return (
-      <motion.form
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+      <form
         onSubmit={handleSubmitPersona}
-        className="mt-4 space-y-6"
+        className="anim-fade-in-up mt-4 space-y-6"
         noValidate
       >
         <div className="p-4 rounded-xl bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/30 flex items-start gap-3">
@@ -293,17 +281,14 @@ function DatosForm({
           Guardar y continuar
           <ArrowRight size={18} />
         </button>
-      </motion.form>
+      </form>
     );
   }
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+    <form
       onSubmit={handleSubmitEmpresa}
-      className="mt-4 space-y-6"
+      className="anim-fade-in-up mt-4 space-y-6"
       noValidate
     >
       <div className="p-4 rounded-xl bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900/30 flex items-start gap-3">
@@ -355,7 +340,7 @@ function DatosForm({
         Guardar y continuar
         <ArrowRight size={18} />
       </button>
-    </motion.form>
+    </form>
   );
 }
 

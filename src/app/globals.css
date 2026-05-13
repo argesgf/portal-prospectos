@@ -73,6 +73,13 @@
   75% { transform: translate(40px, 20px) scale(1.05); }
 }
 
+@keyframes pop {
+  0%   { transform: scale(0);    opacity: 0; }
+  55%  { transform: scale(1.18); opacity: 1; }
+  80%  { transform: scale(0.94); }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -104,12 +111,25 @@ body {
   .animate-blob2,
   .animate-blob3 {
     animation: none !important;
+    /* Hide static blobs on mobile — static blur is still a compositing cost */
+    display: none !important;
   }
 
   /* iOS Safari: backdrop-filter at 24px is extremely expensive — reduce to 8px */
   .backdrop-blur-xl {
     -webkit-backdrop-filter: blur(8px) !important;
     backdrop-filter: blur(8px) !important;
+  }
+
+  /* Kill continuous gradient animations on mobile — they run 60fps for no benefit */
+  .scroll-progress-bar {
+    animation: none !important;
+    background: #4f46e5 !important;
+  }
+
+  .iridescent {
+    animation: none !important;
+    background: rgba(99, 102, 241, 0.07) !important;
   }
 }
 
@@ -140,16 +160,24 @@ body {
 }
 
 .anim-fade-in-up {
+  will-change: opacity, transform;
   animation: fade-in-up 0.5s ease-out forwards;
 }
 
 .anim-fade-in-up-delayed {
   opacity: 0;
+  will-change: opacity, transform;
   animation: fade-in-up 0.5s ease-out 0.4s forwards;
 }
 
 .anim-fade-in {
+  will-change: opacity;
   animation: fade-in 0.15s ease-out forwards;
+}
+
+.anim-pop {
+  will-change: transform, opacity;
+  animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 ::-webkit-scrollbar {

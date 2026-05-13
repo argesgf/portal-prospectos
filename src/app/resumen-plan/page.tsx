@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { usePlan } from "@/lib/context/plan-context";
 import FlowHeader from "@/components/flow/FlowHeader";
 import StepIndicator from "@/components/flow/StepIndicator";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import PlanSummaryCard from "@/components/flow/PlanSummaryCard";
 import InstallationToggle from "@/components/flow/InstallationToggle";
@@ -50,12 +49,7 @@ export default function ResumenPlanPage() {
       <div className="pt-16">
         <div className="mx-auto max-w-2xl px-6 pt-6 pb-16">
           <StepIndicator steps={steps} currentStep={3} />
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-4 space-y-8"
-          >
+          <div className="anim-fade-in-up mt-4 space-y-8">
             <InstallationToggle />
             <FinancingSelector />
             <PlanSummaryCard />
@@ -67,7 +61,7 @@ export default function ResumenPlanPage() {
               Continuar con mis datos
               <ArrowRight size={18} />
             </button>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

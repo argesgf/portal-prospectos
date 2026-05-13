@@ -3,7 +3,6 @@
 import { usePlan } from "@/lib/context/plan-context";
 import type { ContactFormData, TipoUsuario } from "@/lib/mock/data";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   User,
@@ -117,11 +116,7 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center text-center py-12 px-6"
-      >
+      <div className="anim-fade-in flex flex-col items-center text-center py-12 px-6">
         <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-6">
           <CheckCircle2 size={36} />
         </div>
@@ -132,16 +127,14 @@ export default function ContactForm() {
           Tus datos han sido validados. Revisa el resumen de tu contratación a
           continuación.
         </p>
-      </motion.div>
+      </div>
     );
   }
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+    <form
       onSubmit={handleSubmit}
-      className="space-y-6"
+      className="anim-fade-in-up space-y-6"
       noValidate
     >
       <div className="grid sm:grid-cols-2 gap-4">
@@ -248,7 +241,7 @@ export default function ContactForm() {
           ? "Registrar datos empresariales"
           : "Registrar datos personales"}
       </button>
-    </motion.form>
+    </form>
   );
 }
 

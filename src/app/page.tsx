@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import PlanSelector from "@/components/PlanSelector";
@@ -63,8 +63,20 @@ export default function Home() {
   const ctaBtnRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)");
+    setIsDesktop(mql.matches);
+    const onChange = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    // Skip GSAP hero animations on mobile — CSS classes show content immediately,
+    // saving ~100KB GSAP download and keeping content visible from first paint.
+    if (!isDesktop && isDesktop !== null) return;
     let cancelled = false;
 
     (async () => {
@@ -108,7 +120,7 @@ export default function Home() {
     })();
 
     return () => { cancelled = true; };
-  }, []);
+  }, [isDesktop]);
 
   return (
     <>
@@ -139,7 +151,7 @@ export default function Home() {
               className="bottom-1/4 -left-1/4 w-[350px] h-[350px]"
             />
             <div className="absolute inset-0 z-0">
-              <HeroSphere />
+              {isDesktop && <HeroSphere />}
             </div>
           </div>
 
