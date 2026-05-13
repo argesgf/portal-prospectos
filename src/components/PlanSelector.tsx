@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { usePlan } from "@/lib/context/plan-context";
+import type { TipoUsuario } from "@/lib/mock/data";
+import { planesPersonas, planesEmpresas, type Plan } from "@/lib/mock/data";
 import { Check, Wifi, Building2 } from "lucide-react";
 import { ShineBorder } from "@/components/ui/shine-border";
 import gsap from "gsap";
@@ -10,58 +14,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 type PlanTier = "personas" | "empresas";
-
-interface Plan {
-  name: string;
-  speed: string;
-  price: string;
-  popular?: boolean;
-  features: string[];
-}
-
-const planesPersonas: Plan[] = [
-  {
-    name: "Básico",
-    speed: "100 Mbps",
-    price: "$599/mes",
-    features: ["Fibra óptica 100 Mbps", "WiFi 6 incluido", "Soporte 8-18hs", "Instalación gratis"],
-  },
-  {
-    name: "Estándar",
-    speed: "300 Mbps",
-    price: "$899/mes",
-    popular: true,
-    features: ["Fibra óptica 300 Mbps", "WiFi 6 mesh", "Soporte 24/7", "Instalación gratis", "Router incluido"],
-  },
-  {
-    name: "Premium",
-    speed: "1 Gbps",
-    price: "$1,499/mes",
-    features: ["Fibra óptica 1 Gbps", "WiFi 6 Pro mesh", "Soporte 24/7 prioritario", "Instalación gratis", "Router + repetidor", "TV digital incluida"],
-  },
-];
-
-const planesEmpresas: Plan[] = [
-  {
-    name: "Startup",
-    speed: "500 Mbps",
-    price: "$2,499/mes",
-    features: ["Fibra simétrica 500 Mbps", "IP fija incluida", "SLA 99.5%", "Soporte 24/7", "Hasta 10 dispositivos"],
-  },
-  {
-    name: "Business",
-    speed: "1 Gbps",
-    price: "$4,999/mes",
-    popular: true,
-    features: ["Fibra simétrica 1 Gbps", "5 IPs fijas", "SLA 99.9%", "Soporte 24/7 dedicado", "Hasta 30 dispositivos", "Backup 4G incluido"],
-  },
-  {
-    name: "Enterprise",
-    speed: "10 Gbps",
-    price: "A medida",
-    features: ["Fibra dedicada 10 Gbps", "IPs fijas ilimitadas", "SLA 99.99%", "Soporte con ingeniero asignado", "Red SD-WAN", "Backup redundante", "SLA con penalidades"],
-  },
-];
 
 const tabs = [
   { value: "personas", label: "Para tu hogar", icon: Wifi },
@@ -88,12 +40,22 @@ function GradientBlob({
 }
 
 export default function PlanSelector() {
+  const router = useRouter();
+  const { setTipoUsuario, setSelectedPlan, resetFlow } = usePlan();
   const [tier, setTier] = useState<PlanTier>("personas");
   const plans = tier === "personas" ? planesPersonas : planesEmpresas;
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+
+  const handleContratar = (plan: Plan) => {
+    const tipo: TipoUsuario = tier === "personas" ? "persona" : "empresa";
+    resetFlow();
+    setTipoUsuario(tipo);
+    setSelectedPlan(plan);
+    router.push("/cobertura");
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -243,11 +205,12 @@ export default function PlanSelector() {
                 </ul>
 
                 <button
+                  onClick={() => handleContratar(plan)}
                   className={cn(
                     "mt-8 w-full rounded-xl py-3 text-sm font-semibold transition-all duration-300",
                     plan.popular
-                      ? "bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/40 hover:scale-[1.02]"
-                      : "border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-white hover:scale-[1.02]"
+                      ? "bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-lg shadow-blue-700/25 hover:shadow-blue-700/40 hover:scale-[1.02]"
+                      : "border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-blue-600 hover:text-blue-700 dark:hover:text-white hover:scale-[1.02]"
                   )}
                 >
                   Contratar
