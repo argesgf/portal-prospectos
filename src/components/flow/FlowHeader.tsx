@@ -2,6 +2,7 @@
 
 import { ArrowLeft, Home } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/curtain-theme-toggle";
+import Image from "next/image";
 
 interface FlowHeaderProps {
   title: string;
@@ -62,6 +63,10 @@ export default function FlowHeader({
         </div>
 
         <div className="flex items-center gap-2">
+          <a href="/" className="hidden sm:flex items-center gap-1.5 mr-1">
+            <Image src="/logo_sgf.webp" alt="Sisprot Global Fiber" width={22} height={22} className="rounded" />
+            <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-500">SGF</span>
+          </a>
           <ThemeToggle variant="icon" defaultTheme="light" duration={550} />
           {showHome && (
             <button

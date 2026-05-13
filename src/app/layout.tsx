@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "NetPortal | Internet de alta velocidad",
+  title: "Sisprot Global Fiber | Internet de alta velocidad",
   description:
     "Planes de internet con fibra óptica para hogar y empresa. Velocidad, estabilidad y soporte 24/7.",
 };

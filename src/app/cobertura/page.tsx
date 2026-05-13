@@ -28,28 +28,30 @@ function MapLoadingSkeleton() {
 }
 
 const steps = [
-  { label: "Plan", number: 1 },
+  { label: "Contacto", number: 1 },
   { label: "Cobertura", number: 2 },
-  { label: "Datos", number: 3 },
-  { label: "Resumen", number: 4 },
+  { label: "Plan", number: 3 },
+  { label: "Datos", number: 4 },
+  { label: "Dirección", number: 5 },
+  { label: "Resumen", number: 6 },
 ];
 
 export default function CoberturaPage() {
   const router = useRouter();
-  const { tipoUsuario, selectedPlan, coverageData, resetFlow } = usePlan();
+  const { tipoUsuario, selectedPlan, coverageData, contactStepData, resetFlow } = usePlan();
 
   useEffect(() => {
-    if (!tipoUsuario || !selectedPlan) {
+    if (!tipoUsuario || !selectedPlan || !contactStepData) {
       router.replace("/");
     }
-  }, [tipoUsuario, selectedPlan, router]);
+  }, [tipoUsuario, selectedPlan, contactStepData, router]);
 
   const handleGoHome = useCallback(() => {
     resetFlow();
     router.push("/");
   }, [resetFlow, router]);
 
-  if (!tipoUsuario || !selectedPlan) {
+  if (!tipoUsuario || !selectedPlan || !contactStepData) {
     return <div className="flex items-center justify-center min-h-screen bg-zinc-50 dark:bg-zinc-950" />;
   }
 
@@ -58,8 +60,7 @@ export default function CoberturaPage() {
       <FlowHeader
         title="Verificar cobertura"
         subtitle={selectedPlan.name}
-        backHref="/"
-        onBack={handleGoHome}
+        backHref="/contacto"
         onHome={handleGoHome}
       />
 
@@ -82,10 +83,10 @@ export default function CoberturaPage() {
               className="mt-8 pb-12 flex justify-center"
             >
               <button
-                onClick={() => router.push("/registro")}
-                className="px-10 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white shadow-xl shadow-blue-700/30 hover:shadow-blue-700/50 transition-all duration-300 hover:scale-[1.02]"
+                onClick={() => router.push("/resumen-plan")}
+                className="px-10 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white shadow-xl shadow-blue-700/30 hover:shadow-blue-700/50 transition-all duration-300 hover:scale-[1.02] dark:from-yellow-400 dark:to-amber-400 dark:hover:from-yellow-500 dark:hover:to-amber-500 dark:text-zinc-900 dark:shadow-yellow-400/30"
               >
-                Continuar al registro
+                Continuar al resumen del plan
               </button>
             </motion.div>
           )}

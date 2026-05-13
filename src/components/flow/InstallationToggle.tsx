@@ -68,14 +68,14 @@ export default function InstallationToggle() {
               className={cn(
                 "relative flex flex-col items-start gap-3 rounded-2xl border-2 p-5 text-left transition-all duration-300",
                 selected
-                  ? "border-blue-500 bg-blue-50 dark:bg-blue-950/30 shadow-lg shadow-blue-500/10"
+                  ? "border-yellow-400 bg-yellow-50 dark:bg-yellow-950/30 shadow-lg shadow-yellow-400/10"
                   : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700"
               )}
             >
               {selected && (
                 <motion.div
                   layoutId="install-indicator"
-                  className="absolute top-3 right-3 h-3 w-3 rounded-full bg-blue-600"
+                  className="absolute top-3 right-3 h-3 w-3 rounded-full bg-yellow-400"
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}
                 />
               )}
@@ -84,7 +84,7 @@ export default function InstallationToggle() {
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-xl",
                   selected
-                    ? "bg-blue-600 text-white"
+                    ? "bg-yellow-400 text-zinc-900"
                     : "bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400"
                 )}
               >
@@ -108,7 +108,7 @@ export default function InstallationToggle() {
                 className={cn(
                   "text-lg font-bold",
                   selected
-                    ? "text-blue-700 dark:text-blue-400"
+                    ? "text-yellow-600 dark:text-yellow-400"
                     : "text-zinc-600 dark:text-zinc-400"
                 )}
               >
@@ -129,7 +129,7 @@ export default function InstallationToggle() {
                       className={cn(
                         "h-1 w-1 rounded-full",
                         selected
-                          ? "bg-blue-600 dark:bg-blue-400"
+                          ? "bg-yellow-400 dark:bg-yellow-400"
                           : "bg-zinc-300 dark:bg-zinc-600"
                       )}
                     />

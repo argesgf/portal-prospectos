@@ -93,7 +93,7 @@ export default function PlanSummary() {
         >
           <CheckCircle2 size={42} />
         </motion.div>
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-yellow-500 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-amber-500 bg-clip-text text-transparent">
           Contratación confirmada
         </h2>
         <p className="mt-3 text-zinc-600 dark:text-zinc-400 max-w-md">
@@ -332,7 +332,7 @@ export default function PlanSummary() {
         onClick={handleConfirm}
         className={cn(
           "w-full py-4 rounded-xl text-base font-bold transition-all duration-300 flex items-center justify-center gap-2",
-          "bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white",
+          "bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white dark:from-yellow-400 dark:to-amber-400 dark:hover:from-yellow-500 dark:hover:to-amber-500 dark:text-zinc-900",
           "dark:from-blue-600 dark:to-blue-500 dark:hover:from-blue-700 dark:hover:to-blue-600",
           "shadow-xl shadow-blue-700/30 hover:shadow-blue-700/50 hover:scale-[1.01]"
         )}

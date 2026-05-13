@@ -28,9 +28,9 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
                 className={cn(
                   "flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all duration-300",
                   isCompleted &&
-                    "bg-blue-600 text-white shadow-lg shadow-blue-600/30",
+                    "bg-blue-500 text-white shadow-lg shadow-blue-500/30 dark:bg-yellow-400 dark:text-zinc-900 dark:shadow-yellow-400/30",
                   isCurrent &&
-                    "bg-blue-600 text-white shadow-lg shadow-blue-600/30 ring-4 ring-blue-100 dark:ring-blue-900/40",
+                    "bg-blue-500 text-white shadow-lg shadow-blue-500/30 ring-4 ring-blue-100 dark:bg-yellow-400 dark:text-zinc-900 dark:shadow-yellow-400/30 dark:ring-yellow-900/40",
                   !isCompleted &&
                     !isCurrent &&
                     "bg-zinc-100 dark:bg-zinc-800 text-zinc-400 dark:text-zinc-500"
@@ -42,9 +42,9 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
                 className={cn(
                   "mt-1.5 text-[10px] font-medium whitespace-nowrap transition-colors duration-300",
                   isCurrent
-                    ? "text-blue-600 dark:text-blue-400"
+                    ? "text-blue-500 dark:text-yellow-400"
                     : isCompleted
-                      ? "text-blue-500 dark:text-blue-500"
+                      ? "text-blue-500 dark:text-yellow-500"
                       : "text-zinc-400 dark:text-zinc-600"
                 )}
               >
@@ -57,7 +57,7 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
                 className={cn(
                   "h-0.5 w-8 sm:w-12 mx-1 mt-[-18px] rounded-full transition-colors duration-300",
                   isCompleted
-                    ? "bg-blue-600"
+                    ? "bg-blue-500 dark:bg-yellow-400"
                     : "bg-zinc-200 dark:bg-zinc-800"
                 )}
               />

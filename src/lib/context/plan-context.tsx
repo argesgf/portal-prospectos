@@ -13,6 +13,10 @@ import type {
   Plan,
   CoverageResult,
   ContactFormData,
+  ContactStepData,
+  PersonaNaturalData,
+  EmpresaData,
+  CatastroData,
   TipoUsuario,
   TipoInstalacion,
   TipoFinanciamiento,
@@ -23,12 +27,20 @@ interface PlanContextValue {
   selectedPlan: Plan | null;
   coverageData: CoverageResult | null;
   contactData: ContactFormData | null;
+  contactStepData: ContactStepData | null;
+  personaData: PersonaNaturalData | null;
+  empresaData: EmpresaData | null;
+  catastroData: CatastroData | null;
   tipoInstalacion: TipoInstalacion;
   tipoFinanciamiento: TipoFinanciamiento;
   setTipoUsuario: (t: TipoUsuario) => void;
   setSelectedPlan: (p: Plan) => void;
   setCoverageData: (c: CoverageResult | null) => void;
   setContactData: (d: ContactFormData | null) => void;
+  setContactStepData: (d: ContactStepData | null) => void;
+  setPersonaData: (d: PersonaNaturalData | null) => void;
+  setEmpresaData: (d: EmpresaData | null) => void;
+  setCatastroData: (d: CatastroData | null) => void;
   setTipoInstalacion: (t: TipoInstalacion) => void;
   setTipoFinanciamiento: (t: TipoFinanciamiento) => void;
   resetFlow: () => void;
@@ -43,6 +55,10 @@ interface PersistedState {
   selectedPlan: Plan | null;
   coverageData: CoverageResult | null;
   contactData: ContactFormData | null;
+  contactStepData: ContactStepData | null;
+  personaData: PersonaNaturalData | null;
+  empresaData: EmpresaData | null;
+  catastroData: CatastroData | null;
   tipoInstalacion: TipoInstalacion;
   tipoFinanciamiento: TipoFinanciamiento;
 }
@@ -54,6 +70,10 @@ function loadState(): PersistedState {
       selectedPlan: null,
       coverageData: null,
       contactData: null,
+      contactStepData: null,
+      personaData: null,
+      empresaData: null,
+      catastroData: null,
       tipoInstalacion: "wifi",
       tipoFinanciamiento: "contado",
     };
@@ -69,6 +89,10 @@ function loadState(): PersistedState {
     selectedPlan: null,
     coverageData: null,
     contactData: null,
+    contactStepData: null,
+    personaData: null,
+    empresaData: null,
+    catastroData: null,
     tipoInstalacion: "wifi",
     tipoFinanciamiento: "contado",
   };
@@ -80,6 +104,10 @@ export function PlanProvider({ children }: { children: ReactNode }) {
   const [selectedPlan, setSelectedPlanState] = useState<Plan | null>(initial.selectedPlan);
   const [coverageData, setCoverageDataState] = useState<CoverageResult | null>(initial.coverageData);
   const [contactData, setContactDataState] = useState<ContactFormData | null>(initial.contactData);
+  const [contactStepData, setContactStepDataState] = useState<ContactStepData | null>(initial.contactStepData);
+  const [personaData, setPersonaDataState] = useState<PersonaNaturalData | null>(initial.personaData);
+  const [empresaData, setEmpresaDataState] = useState<EmpresaData | null>(initial.empresaData);
+  const [catastroData, setCatastroDataState] = useState<CatastroData | null>(initial.catastroData);
   const [tipoInstalacion, setTipoInstalacionState] = useState<TipoInstalacion>(initial.tipoInstalacion);
   const [tipoFinanciamiento, setTipoFinanciamientoState] = useState<TipoFinanciamiento>(initial.tipoFinanciamiento);
   const mountedRef = useRef(false);
@@ -99,6 +127,10 @@ export function PlanProvider({ children }: { children: ReactNode }) {
         selectedPlan,
         coverageData,
         contactData,
+        contactStepData,
+        personaData,
+        empresaData,
+        catastroData,
         tipoInstalacion,
         tipoFinanciamiento,
         ...overrides,
@@ -109,7 +141,7 @@ export function PlanProvider({ children }: { children: ReactNode }) {
         //
       }
     },
-    [tipoUsuario, selectedPlan, coverageData, contactData, tipoInstalacion, tipoFinanciamiento]
+    [tipoUsuario, selectedPlan, coverageData, contactData, contactStepData, personaData, empresaData, catastroData, tipoInstalacion, tipoFinanciamiento]
   );
 
   const setTipoUsuario = useCallback(
@@ -144,6 +176,38 @@ export function PlanProvider({ children }: { children: ReactNode }) {
     [persist]
   );
 
+  const setContactStepData = useCallback(
+    (d: ContactStepData | null) => {
+      setContactStepDataState(d);
+      persist({ contactStepData: d });
+    },
+    [persist]
+  );
+
+  const setPersonaData = useCallback(
+    (d: PersonaNaturalData | null) => {
+      setPersonaDataState(d);
+      persist({ personaData: d });
+    },
+    [persist]
+  );
+
+  const setEmpresaData = useCallback(
+    (d: EmpresaData | null) => {
+      setEmpresaDataState(d);
+      persist({ empresaData: d });
+    },
+    [persist]
+  );
+
+  const setCatastroData = useCallback(
+    (d: CatastroData | null) => {
+      setCatastroDataState(d);
+      persist({ catastroData: d });
+    },
+    [persist]
+  );
+
   const setTipoInstalacion = useCallback(
     (t: TipoInstalacion) => {
       setTipoInstalacionState(t);
@@ -165,6 +229,10 @@ export function PlanProvider({ children }: { children: ReactNode }) {
     setSelectedPlanState(null);
     setCoverageDataState(null);
     setContactDataState(null);
+    setContactStepDataState(null);
+    setPersonaDataState(null);
+    setEmpresaDataState(null);
+    setCatastroDataState(null);
     setTipoInstalacionState("wifi");
     setTipoFinanciamientoState("contado");
     try {
@@ -181,12 +249,20 @@ export function PlanProvider({ children }: { children: ReactNode }) {
         selectedPlan,
         coverageData,
         contactData,
+        contactStepData,
+        personaData,
+        empresaData,
+        catastroData,
         tipoInstalacion,
         tipoFinanciamiento,
         setTipoUsuario,
         setSelectedPlan,
         setCoverageData,
         setContactData,
+        setContactStepData,
+        setPersonaData,
+        setEmpresaData,
+        setCatastroData,
         setTipoInstalacion,
         setTipoFinanciamiento,
         resetFlow,

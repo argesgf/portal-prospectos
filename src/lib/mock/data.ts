@@ -36,6 +36,90 @@ export interface ContactFormData {
 export type TipoInstalacion = "wifi" | "no-wifi";
 export type TipoFinanciamiento = "contado" | "financiamiento";
 
+export interface ContactStepData {
+  nombres: string;
+  apellidos: string;
+  telefono: string;
+  correo: string;
+}
+
+export interface PersonaNaturalData {
+  nombres: string;
+  apellidos: string;
+  telefono: string;
+  correo: string;
+  cedula: string;
+  rif: string;
+  sexo: string;
+  fechaNacimiento: string;
+  nivelEstudio: string;
+  cedulaImage: string | null;
+  rifImage: string | null;
+  firma: string | null;
+}
+
+export interface EmpresaData {
+  representanteNombre: string;
+  representanteApellido: string;
+  representanteTelefono: string;
+  representanteCorreo: string;
+  representanteCedula: string;
+  representanteRif: string;
+  representanteFirma: string | null;
+  rif: string;
+  nombre: string;
+  emailCorporativo: string;
+  telefono: string;
+  tipoNegocio: string;
+  rifImage: string | null;
+}
+
+export interface CatastroData {
+  tipoVivienda: "horizontal" | "vertical" | null;
+  tipoPropiedad: "casa" | "apartamento" | null;
+  edificio: string;
+  nroApto: string;
+  piso: string;
+  nroCasa: string;
+  tipoAmbito: string;
+  ambito: string;
+  direccion: string;
+}
+
+export const TIPOS_AMBITO = [
+  "Avenida Principal",
+  "Avenida",
+  "Calle",
+  "Carrera",
+  "Barrio",
+  "Sector",
+  "Urbanización",
+  "Residencias",
+  "Conjunto Residencial",
+  "Pasaje",
+  "Verieda",
+];
+
+export const ambitosPorTipo: Record<string, string[]> = {
+  "Avenida Principal": ["Jabillar", "Macaro", "Los Naranjos", "El Recurso", "Samán de Güere"],
+  "Avenida": ["Miranda", "Bermúdez", "Intercomunal Turmero-Maracay", "Principal de San Joaquín"],
+  "Calle": ["Bolívar", "Sucre", "Páez", "Mariño", "Urdaneta", "Ribas", "5 de Julio", "Negro Primero", "Real de Turmero"],
+  Barrio: ["Las Mercedes", "El Cambur", "La Candelaria", "El Limón"],
+  Sector: ["El Recurso", "Samán de Güere", "El Cambur", "La Candelaria", "El Limón"],
+  Urbanización: ["La Trinidad", "San Joaquín", "El Centro", "Villas del Parque", "Los Naranjos"],
+  Residencias: ["Turmero Center", "Parque Residencial", "Don Bosco"],
+  "Conjunto Residencial": ["Los Jardines", "Las Acacias", "San Miguel"],
+  Pasaje: ["1", "2", "3", "4", "5", "6", "7", "8"],
+  Verieda: ["La Mora", "El Rincón", "Los Mangos"],
+};
+
+export const EDIFICIOS_POR_AMBITO: Record<string, string[]> = {
+  "Villas del Parque": ["Edif. Alameda", "Edif. Los Geranios", "Edif. Los Girasoles", "Edif. Las Orquídeas"],
+  "Los Naranjos": ["Edif. A", "Edif. B", "Edif. C", "Edif. D"],
+  "Turmero Center": ["Torre A", "Torre B", "Torre C"],
+  "Parque Residencial": ["Edif. 1", "Edif. 2", "Edif. 3"],
+};
+
 export const planesPersonas: Plan[] = [
   {
     id: "basico-persona",

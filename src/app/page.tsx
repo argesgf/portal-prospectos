@@ -8,7 +8,8 @@ import HeroSphere from "@/components/HeroSphere";
 import PlanSelector from "@/components/PlanSelector";
 import FeaturesSection from "@/components/FeaturesSection";
 import CTASection from "@/components/CTASection";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CreditCard, Globe } from "lucide-react";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -105,7 +106,7 @@ export default function Home() {
         <section
           id="hero"
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-zinc-950"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-zinc-950 pt-16 md:pt-20"
         >
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-indigo-100/60 via-white to-white dark:from-indigo-950/40 dark:via-zinc-950 dark:to-zinc-950 z-10" />
@@ -127,25 +128,28 @@ export default function Home() {
             <HeroSphere />
           </div>
 
-          <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] px-4 py-1.5 mb-8 shadow-lg dark:shadow-none">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-green-500 animate-ping opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-              </span>
-              <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium tracking-wide uppercase">
-                Red con 99.9% de disponibilidad
-              </span>
+          <div className="relative z-0 flex flex-col items-center text-center px-6 max-w-4xl">
+            <div className="inline-flex items-center gap-3 rounded-full bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] px-5 py-2 mb-8 shadow-lg dark:shadow-none">
+              <Image
+                src="/logo_sgf.webp"
+                alt="Sisprot Global Fiber"
+                width={30}
+                height={30}
+                className="rounded-lg shrink-0"
+              />
+                <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium tracking-wide">
+                  <strong className="text-zinc-900 dark:text-white">Sisprot Global Fiber</strong> — Conectividad que transforma
+                </span>
             </div>
 
             <h1
               ref={headingRef}
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold leading-[1.02] tracking-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.04] tracking-tight"
             >
               <span className="block bg-gradient-to-r from-zinc-900 via-zinc-700 to-zinc-500 dark:from-white dark:via-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
                 Internet que
               </span>
-              <span className="block bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 dark:from-indigo-400 dark:via-violet-400 dark:to-purple-400 bg-clip-text text-transparent">
+              <span className="block bg-gradient-to-r from-yellow-500 via-amber-400 to-yellow-500 dark:from-yellow-400 dark:via-amber-300 dark:to-yellow-400 bg-clip-text text-transparent">
                 conecta tu mundo
               </span>
             </h1>
@@ -160,23 +164,42 @@ export default function Home() {
 
             <div
               ref={ctaBtnRef}
-              className="mt-10 flex flex-col sm:flex-row gap-4"
+              className="mt-10 flex flex-col gap-4 items-center"
             >
               <a
                 href="#planes"
-                className="group relative inline-flex items-center gap-2 rounded-full bg-indigo-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-indigo-600/30 hover:bg-indigo-500 hover:shadow-indigo-600/50 transition-all duration-300 overflow-hidden"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-linear-to-r from-blue-700 to-blue-600 hover:from-gray-800 hover:to-blue-700 text-white shadow-xl shadow-blue-700/30 hover:shadow-blue-700/50 dark:from-yellow-400 dark:to-amber-400 dark:hover:from-yellow-500 dark:hover:to-amber-500 dark:text-zinc-900 dark:shadow-yellow-400/30 hover:scale-[1.02] transition-all duration-300 overflow-hidden"
+                aria-label="Ver planes"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                Ver planes
-                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                <span className="absolute inset-0 bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <Globe size={18} className="shrink-0 mr-2" />
+                <span className="inline-flex items-center gap-2">
+                  <span>Ver planes</span>
+                  <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </a>
-              <a
-                href="#features"
-                className="group inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-800 px-8 py-4 text-base font-semibold text-zinc-700 dark:text-zinc-300 hover:border-zinc-500 dark:hover:border-zinc-700 hover:text-zinc-900 dark:hover:text-white transition-all duration-300"
-              >
-                Conocer más
-                <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0" />
-              </a>
+              <div className="flex gap-3">
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 px-5 py-4 text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:border-red-400 dark:hover:border-red-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all duration-300"
+                  aria-label="YouTube"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                  <span className="hidden sm:inline">YouTube</span>
+                </a>
+                <a
+                  href="https://pagos.sisprotglobalfiber.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-full border border-zinc-300 dark:border-zinc-700 px-5 py-4 text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:border-yellow-400 dark:hover:border-yellow-500 hover:text-yellow-600 dark:hover:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-yellow-950/20 transition-all duration-300"
+                  aria-label="Portal de pagos"
+                >
+                  <CreditCard size={18} />
+                  <span className="hidden sm:inline">Ir al portal</span>
+                </a>
+              </div>
             </div>
 
             <div
@@ -199,18 +222,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-
-          <div
-            ref={scrollHintRef}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-          >
-            <span className="text-[10px] text-zinc-400 dark:text-zinc-600 tracking-widest uppercase">
-              Scroll
-            </span>
-            <div className="h-10 w-6 rounded-full border-2 border-zinc-300 dark:border-zinc-700 flex justify-center">
-              <div className="h-2.5 w-1.5 rounded-full bg-zinc-400 dark:bg-zinc-500 mt-2 animate-bounce" />
-            </div>
-          </div>
         </section>
 
         <PlanSelector />
@@ -221,9 +232,18 @@ export default function Home() {
       <footer className="relative border-t border-zinc-200 dark:border-zinc-800/50 py-8 bg-white dark:bg-zinc-950 overflow-hidden">
         <div className="absolute inset-0 iridescent opacity-50 dark:opacity-100" />
         <div className="relative mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-zinc-500 dark:text-zinc-500">
-            © 2026 NetPortal. Todos los derechos reservados.
-          </p>
+          <div className="flex items-center gap-2.5">
+            <Image
+              src="/logo_sgf.webp"
+              alt="Sisprot Global Fiber"
+              width={24}
+              height={24}
+              className="rounded"
+            />
+            <p className="text-sm text-zinc-500 dark:text-zinc-500">
+              © 2026 Sisprot Global Fiber. Todos los derechos reservados.
+            </p>
+          </div>
           <div className="flex gap-6 text-sm text-zinc-500 dark:text-zinc-500">
             <a href="#" className="hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors duration-300">
               Términos

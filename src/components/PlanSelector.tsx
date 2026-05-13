@@ -43,7 +43,17 @@ export default function PlanSelector() {
   const router = useRouter();
   const { setTipoUsuario, setSelectedPlan, resetFlow } = usePlan();
   const [tier, setTier] = useState<PlanTier>("personas");
+  const [isDark, setIsDark] = useState(false);
   const plans = tier === "personas" ? planesPersonas : planesEmpresas;
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains("dark"));
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -54,7 +64,7 @@ export default function PlanSelector() {
     resetFlow();
     setTipoUsuario(tipo);
     setSelectedPlan(plan);
-    router.push("/cobertura");
+    router.push("/contacto");
   };
 
   useEffect(() => {
@@ -173,12 +183,12 @@ export default function PlanSelector() {
           className="grid md:grid-cols-3 gap-6"
         >
           {plans.map((plan) => (
-            <ShineBorder
-              key={plan.name}
-              borderWidth={1.2}
-              color={["#FF007F", "#39FF14", "#00FFFF"]}
-              className="bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] shadow-xl dark:shadow-2xl dark:shadow-black/20"
-            >
+              <ShineBorder
+                key={plan.name}
+                borderWidth={1.2}
+                color={isDark ? ["#facc15", "#f59e0b", "#facc15"] : ["#1d4ed8", "#6366f1", "#1d4ed8"]}
+                className="bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] shadow-xl dark:shadow-2xl dark:shadow-black/20"
+              >
               {plan.popular && (
                 <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-lg bg-gradient-to-r from-pink-500 to-cyan-500 px-4 py-1 text-xs font-semibold text-white shadow-lg z-10">
                   Más popular
@@ -209,7 +219,7 @@ export default function PlanSelector() {
                   className={cn(
                     "mt-8 w-full rounded-xl py-3 text-sm font-semibold transition-all duration-300",
                     plan.popular
-                      ? "bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-lg shadow-blue-700/25 hover:shadow-blue-700/40 hover:scale-[1.02]"
+                      ? "bg-gradient-to-r from-blue-700 to-blue-600 text-white shadow-lg shadow-blue-700/25 hover:shadow-blue-700/40 hover:scale-[1.02] dark:from-yellow-400 dark:to-amber-400 dark:text-zinc-900 dark:shadow-yellow-400/25 dark:hover:shadow-yellow-400/40"
                       : "border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:border-blue-600 hover:text-blue-700 dark:hover:text-white hover:scale-[1.02]"
                   )}
                 >
