@@ -38,11 +38,16 @@ export default function HeroSphere() {
       renderer.toneMappingExposure = 1.2;
       container.appendChild(renderer.domElement);
 
-      const sphereGeo = new THREE.IcosahedronGeometry(1.2, 4);
-      const sphereMat = new THREE.MeshPhysicalMaterial({
-        color: 0x4f46e5, metalness: 0.1, roughness: 0.05, clearcoat: 0.9,
-        clearcoatRoughness: 0.1, emissive: 0x312e81, emissiveIntensity: 0.15,
-      });
+      const sphereGeo = new THREE.IcosahedronGeometry(1.2, isMobile ? 2 : 4);
+      const sphereMat = isMobile
+        ? new THREE.MeshStandardMaterial({
+            color: 0x4f46e5, metalness: 0.2, roughness: 0.1,
+            emissive: 0x312e81, emissiveIntensity: 0.15,
+          })
+        : new THREE.MeshPhysicalMaterial({
+            color: 0x4f46e5, metalness: 0.1, roughness: 0.05, clearcoat: 0.9,
+            clearcoatRoughness: 0.1, emissive: 0x312e81, emissiveIntensity: 0.15,
+          });
       const sphere = new THREE.Mesh(sphereGeo, sphereMat);
       scene.add(sphere);
 
@@ -51,21 +56,21 @@ export default function HeroSphere() {
       const wireframe = new THREE.Mesh(wireGeo, wireMat);
       scene.add(wireframe);
 
-      const ringGeo = new THREE.TorusGeometry(1.7, 0.012, 16, 100);
+      const ringGeo = new THREE.TorusGeometry(1.7, 0.012, 8, isMobile ? 50 : 100);
       const ringMat = new THREE.MeshBasicMaterial({ color: 0x818cf8, transparent: true, opacity: 0.3 });
       const ring = new THREE.Mesh(ringGeo, ringMat);
       ring.rotation.x = Math.PI / 3;
       ring.rotation.z = Math.PI / 4;
       scene.add(ring);
 
-      const ring2Geo = new THREE.TorusGeometry(1.9, 0.008, 16, 100);
+      const ring2Geo = new THREE.TorusGeometry(1.9, 0.008, 8, isMobile ? 50 : 100);
       const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.15 });
       const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
       ring2.rotation.x = -Math.PI / 4;
       ring2.rotation.z = Math.PI / 3;
       scene.add(ring2);
 
-      const glowGeo = new THREE.SphereGeometry(1.5, 32, 32);
+      const glowGeo = new THREE.SphereGeometry(1.5, isMobile ? 16 : 32, isMobile ? 16 : 32);
       const glowMat = new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.06 });
       const glow = new THREE.Mesh(glowGeo, glowMat);
       scene.add(glow);
@@ -142,9 +147,24 @@ export default function HeroSphere() {
         renderer.render(scene, camera);
         animId = requestAnimationFrame(animate);
       };
+      let paused = false;
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting && !paused) {
+            paused = true;
+            cancelAnimationFrame(animId);
+          } else if (entry.isIntersecting && paused) {
+            paused = false;
+            animate();
+          }
+        },
+        { threshold: 0 }
+      );
+      io.observe(container);
       animate();
 
       cleanupRef.current = () => {
+        io.disconnect();
         window.removeEventListener("resize", handleResize);
         cancelAnimationFrame(animId);
         if (renderer.domElement.parentNode) container.removeChild(renderer.domElement);

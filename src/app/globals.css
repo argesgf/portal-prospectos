@@ -98,6 +98,30 @@ body {
   color: white;
 }
 
+/* Perf: disable expensive animated blobs on mobile to reduce GPU load */
+@media (max-width: 767px) {
+  .animate-blob,
+  .animate-blob2,
+  .animate-blob3 {
+    animation: none !important;
+  }
+}
+
+/* Perf: respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animate-blob,
+  .animate-blob2,
+  .animate-blob3,
+  .animate-shine-pulse,
+  .animate-border-beam {
+    animation: none !important;
+  }
+
+  body {
+    transition: none !important;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 6px;
 }

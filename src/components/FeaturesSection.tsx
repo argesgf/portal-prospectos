@@ -1,11 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Zap, Shield, Gauge, Globe, Headphones, Wifi } from "lucide-react";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const features = [
   {
@@ -63,49 +59,66 @@ export default function FeaturesSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+  const gsapCleanup = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (headingRef.current) {
-        gsap.fromTo(
-          headingRef.current,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headingRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
+    let cancelled = false;
 
-      const cards = cardsRef.current?.children;
-      if (cards) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: "top 75%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    });
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+      if (cancelled) return;
 
-    return () => ctx.revert();
+      const ctx = gsap.context(() => {
+        if (headingRef.current) {
+          gsap.fromTo(
+            headingRef.current,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: headingRef.current,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
+
+        const cards = cardsRef.current?.children;
+        if (cards) {
+          gsap.fromTo(
+            cards,
+            { opacity: 0, y: 60 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 75%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
+      });
+
+      gsapCleanup.current = () => ctx.revert();
+    })();
+
+    return () => {
+      cancelled = true;
+      gsapCleanup.current?.();
+    };
   }, []);
 
   return (
@@ -113,6 +126,7 @@ export default function FeaturesSection() {
       id="features"
       ref={sectionRef}
       className="relative py-24 md:py-32 overflow-hidden bg-white dark:bg-zinc-950"
+      style={{ contentVisibility: "auto" }}
     >
       <GradientBlob
         color1="rgba(99,102,241,0.3)"

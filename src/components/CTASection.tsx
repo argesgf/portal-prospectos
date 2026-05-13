@@ -3,10 +3,6 @@
 import { useEffect, useRef } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { ShineBorder } from "@/components/ui/shine-border";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 function GradientBlob({
   className,
@@ -78,29 +74,46 @@ function MagneticButton({
 export default function CTASection() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const gsapCleanup = useRef<(() => void) | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (contentRef.current) {
-        gsap.fromTo(
-          contentRef.current,
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: contentRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    });
+    let cancelled = false;
 
-    return () => ctx.revert();
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+      if (cancelled) return;
+
+      const ctx = gsap.context(() => {
+        if (contentRef.current) {
+          gsap.fromTo(
+            contentRef.current,
+            { opacity: 0, y: 60 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: contentRef.current,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
+      });
+
+      gsapCleanup.current = () => ctx.revert();
+    })();
+
+    return () => {
+      cancelled = true;
+      gsapCleanup.current?.();
+    };
   }, []);
 
   return (
@@ -108,6 +121,7 @@ export default function CTASection() {
       id="cta"
       ref={sectionRef}
       className="relative py-24 md:py-32 bg-zinc-50 dark:bg-zinc-950 overflow-hidden"
+      style={{ contentVisibility: "auto" }}
     >
       <GradientBlob
         color1="rgba(99,102,241,0.3)"
