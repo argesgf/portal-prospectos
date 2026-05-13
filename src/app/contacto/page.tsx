@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { usePlan } from "@/lib/context/plan-context";
 import FlowHeader from "@/components/flow/FlowHeader";
 import StepIndicator from "@/components/flow/StepIndicator";
-import { motion } from "framer-motion";
 import { User, Mail, Phone, AlertCircle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -108,12 +107,9 @@ function ContactForm({
   };
 
   return (
-    <motion.form
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+    <form
       onSubmit={handleSubmit}
-      className="mt-4 space-y-6"
+      className="anim-fade-in-up mt-4 space-y-6"
       noValidate
     >
       <div className="grid sm:grid-cols-2 gap-4">
@@ -167,7 +163,7 @@ function ContactForm({
         Verificar cobertura
         <ArrowRight size={18} />
       </button>
-    </motion.form>
+    </form>
   );
 }
 

@@ -3,7 +3,6 @@
 import { usePlan } from "@/lib/context/plan-context";
 import { cn } from "@/lib/utils";
 import { RECARGO_FINANCIAMIENTO } from "@/lib/mock/data";
-import { motion } from "framer-motion";
 import { CreditCard, CalendarClock, Percent } from "lucide-react";
 import type { TipoFinanciamiento } from "@/lib/mock/data";
 
@@ -50,23 +49,18 @@ export default function FinancingSelector() {
         {options.map((opt) => {
           const selected = tipoFinanciamiento === opt.value;
           return (
-            <motion.button
+            <button
               key={opt.value}
               onClick={() => setTipoFinanciamiento(opt.value)}
-              whileTap={{ scale: 0.98 }}
               className={cn(
-                "relative flex flex-col items-start gap-3 rounded-2xl border-2 p-5 text-left transition-all duration-300",
+                "relative flex flex-col items-start gap-3 rounded-2xl border-2 p-5 text-left transition-[border-color,background-color,box-shadow] duration-300 active:scale-[0.98]",
                 selected
                   ? "border-yellow-400 bg-yellow-50 dark:bg-yellow-950/20 shadow-lg shadow-yellow-400/10"
                   : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700"
               )}
             >
               {selected && (
-                <motion.div
-                  layoutId="financing-indicator"
-                  className="absolute top-3 right-3 h-3 w-3 rounded-full bg-yellow-500"
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                />
+                <div className="absolute top-3 right-3 h-3 w-3 rounded-full bg-yellow-500 anim-fade-in" />
               )}
 
               <div
@@ -114,7 +108,7 @@ export default function FinancingSelector() {
                   Recargo del {RECARGO_FINANCIAMIENTO * 100}% sobre el precio base
                 </div>
               )}
-            </motion.button>
+            </button>
           );
         })}
       </div>

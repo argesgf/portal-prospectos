@@ -33,6 +33,7 @@ export default function Header() {
           ? "bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl border-b border-zinc-200/50 dark:border-zinc-800/50"
           : "bg-transparent"
       )}
+      style={{ transform: 'translateZ(0)' }}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <a href="#hero" className="flex items-center gap-2.5">

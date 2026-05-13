@@ -38,7 +38,7 @@ export default function FlowHeader({
   };
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-blue-100 dark:border-zinc-800/50">
+    <header className="fixed top-0 inset-x-0 z-50 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-blue-100 dark:border-zinc-800/50" style={{ transform: 'translateZ(0)' }}>
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <div className="flex items-center gap-3 min-w-0">
           {(backHref || onBack) && (

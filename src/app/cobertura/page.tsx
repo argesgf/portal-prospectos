@@ -6,8 +6,6 @@ import dynamic from "next/dynamic";
 import { usePlan } from "@/lib/context/plan-context";
 import FlowHeader from "@/components/flow/FlowHeader";
 import StepIndicator from "@/components/flow/StepIndicator";
-import { motion } from "framer-motion";
-
 const CoverageMap = dynamic(
   () => import("@/components/flow/CoverageMap"),
   { ssr: false, loading: () => <MapLoadingSkeleton /> }
@@ -67,28 +65,19 @@ export default function CoberturaPage() {
       <div className="pt-16">
         <div className="mx-auto max-w-6xl px-6 pt-6">
           <StepIndicator steps={steps} currentStep={2} />
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
+          <div className="anim-fade-in-up">
             <CoverageMap />
-          </motion.div>
+          </div>
 
           {coverageData?.available && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-8 pb-12 flex justify-center"
-            >
+            <div className="anim-fade-in-up-delayed mt-8 pb-12 flex justify-center">
               <button
                 onClick={() => router.push("/resumen-plan")}
                 className="px-10 py-3.5 rounded-xl text-sm font-bold bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white shadow-xl shadow-blue-700/30 hover:shadow-blue-700/50 transition-all duration-300 hover:scale-[1.02] dark:from-yellow-400 dark:to-amber-400 dark:hover:from-yellow-500 dark:hover:to-amber-500 dark:text-zinc-900 dark:shadow-yellow-400/30"
               >
                 Continuar al resumen del plan
               </button>
-            </motion.div>
+            </div>
           )}
         </div>
       </div>

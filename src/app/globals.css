@@ -98,12 +98,18 @@ body {
   color: white;
 }
 
-/* Perf: disable expensive animated blobs on mobile to reduce GPU load */
+/* Perf: mobile GPU optimizations */
 @media (max-width: 767px) {
   .animate-blob,
   .animate-blob2,
   .animate-blob3 {
     animation: none !important;
+  }
+
+  /* iOS Safari: backdrop-filter at 24px is extremely expensive — reduce to 8px */
+  .backdrop-blur-xl {
+    -webkit-backdrop-filter: blur(8px) !important;
+    backdrop-filter: blur(8px) !important;
   }
 }
 
@@ -120,6 +126,30 @@ body {
   body {
     transition: none !important;
   }
+}
+
+/* CSS enter animations (replaces framer-motion on simple one-shot transitions) */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.anim-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.anim-fade-in-up-delayed {
+  opacity: 0;
+  animation: fade-in-up 0.5s ease-out 0.4s forwards;
+}
+
+.anim-fade-in {
+  animation: fade-in 0.15s ease-out forwards;
 }
 
 ::-webkit-scrollbar {
