@@ -41,6 +41,7 @@ export default function PlanSummaryCard() {
   const recargoFinanciamiento = tipoFinanciamiento === "financiamiento" ? RECARGO_FINANCIAMIENTO : 0;
   const recargoMonto = Math.round(selectedPlan.price * recargoFinanciamiento);
   const totalMensual = selectedPlan.price + recargoMonto;
+  const totalAPagar = totalMensual + costoInstalacion;
 
   return (
     <div>
@@ -136,6 +137,16 @@ export default function PlanSummaryCard() {
             <p className="text-xl font-bold text-yellow-600 dark:text-yellow-400">
               ${totalMensual.toLocaleString("es-VE")}
               <span className="text-sm font-normal">/mes</span>
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between rounded-xl bg-blue-50/70 dark:bg-yellow-950/25 border border-blue-200/70 dark:border-yellow-900/40 px-4 py-3">
+            <div>
+              <p className="font-bold text-zinc-900 dark:text-white">Total a pagar</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Incluye instalación + primer mes</p>
+            </div>
+            <p className="text-xl font-bold text-blue-700 dark:text-yellow-400">
+              ${totalAPagar.toLocaleString("es-VE")}
             </p>
           </div>
         </div>

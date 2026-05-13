@@ -15,7 +15,8 @@ interface StepIndicatorProps {
 
 export default function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
   return (
-    <div className="flex items-center justify-center gap-1 px-4 py-4">
+    <div className="w-full overflow-x-auto md:overflow-visible -mx-4 px-4 py-3">
+      <div className="flex items-center md:justify-center gap-2 sm:gap-3">
       {steps.map((step, i) => {
         const isCompleted = step.number < currentStep;
         const isCurrent = step.number === currentStep;
@@ -26,7 +27,7 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
             <div className="flex flex-col items-center">
               <div
                 className={cn(
-                  "flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all duration-300",
+                  "flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-[11px] sm:text-xs font-bold transition-all duration-300",
                   isCompleted &&
                     "bg-blue-500 text-white shadow-lg shadow-blue-500/30 dark:bg-yellow-400 dark:text-zinc-900 dark:shadow-yellow-400/30",
                   isCurrent &&
@@ -52,10 +53,10 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
               </span>
             </div>
 
-            {!isLast && (
+              {!isLast && (
               <div
                 className={cn(
-                  "h-0.5 w-8 sm:w-12 mx-1 mt-[-18px] rounded-full transition-colors duration-300",
+                  "h-0.5 w-6 sm:w-8 md:w-12 mx-1 mt-[-14px] sm:mt-[-18px] rounded-full transition-colors duration-300",
                   isCompleted
                     ? "bg-blue-500 dark:bg-yellow-400"
                     : "bg-zinc-200 dark:bg-zinc-800"
@@ -65,6 +66,7 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
           </div>
         );
       })}
+      </div>
     </div>
   );
 }

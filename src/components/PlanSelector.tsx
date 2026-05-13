@@ -8,10 +8,6 @@ import type { TipoUsuario } from "@/lib/mock/data";
 import { planesPersonas, planesEmpresas, type Plan } from "@/lib/mock/data";
 import { Check, Wifi, Building2 } from "lucide-react";
 import { ShineBorder } from "@/components/ui/shine-border";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type PlanTier = "personas" | "empresas";
 
@@ -68,67 +64,82 @@ export default function PlanSelector() {
   };
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (headingRef.current) {
-        gsap.fromTo(
-          headingRef.current,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headingRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-      if (tabsRef.current) {
-        gsap.fromTo(
-          tabsRef.current,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: tabsRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-    });
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
 
-    const cards = cardsRef.current?.children;
-    if (cards) {
-      const ctx2 = gsap.context(() => {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.12,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: "top 75%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
+    let cancelled = false;
+
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+      if (cancelled) return;
+
+      const ctx = gsap.context(() => {
+        if (headingRef.current) {
+          gsap.fromTo(
+            headingRef.current,
+            { opacity: 0, y: 40 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: headingRef.current,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
+        if (tabsRef.current) {
+          gsap.fromTo(
+            tabsRef.current,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: tabsRef.current,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
       });
-      return () => { ctx.revert(); ctx2.revert(); };
-    }
 
-    return () => ctx.revert();
+      const cards = cardsRef.current?.children;
+      if (cards) {
+        const ctx2 = gsap.context(() => {
+          gsap.fromTo(
+            cards,
+            { opacity: 0, y: 50 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.12,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: cardsRef.current,
+                start: "top 75%",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        });
+        ctx.add(() => ctx2.revert);
+        return;
+      }
+    })();
+
+    return () => { cancelled = true; };
   }, []);
 
   return (

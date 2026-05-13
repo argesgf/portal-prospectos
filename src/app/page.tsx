@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
 import Header from "@/components/Header";
-import HeroSphere from "@/components/HeroSphere";
 import PlanSelector from "@/components/PlanSelector";
 import FeaturesSection from "@/components/FeaturesSection";
 import CTASection from "@/components/CTASection";
 import { ArrowRight, CreditCard, Globe } from "lucide-react";
 import Image from "next/image";
 
-gsap.registerPlugin(ScrollTrigger);
+const HeroSphere = dynamic(() => import("@/components/HeroSphere"), {
+  ssr: false,
+  loading: () => null,
+});
 
 function GradientBlob({
   className,
@@ -64,37 +65,52 @@ export default function Home() {
   const scrollHintRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const isMobile = window.innerWidth < 768;
+    if (isMobile) return;
 
-    tl.fromTo(
-      headingRef.current,
-      { opacity: 0, y: 60, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.2 }
-    )
-      .fromTo(
-        subRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        "-=0.6"
+    let cancelled = false;
+
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      gsap.registerPlugin(ScrollTrigger);
+      if (cancelled) return;
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 60, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2 }
       )
-      .fromTo(
-        ctaBtnRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.3"
-      )
-      .fromTo(
-        statsRef.current?.children ?? [],
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
-        "-=0.2"
-      )
-      .fromTo(
-        scrollHintRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.6 },
-        "-=0.1"
-      );
+        .fromTo(
+          subRef.current,
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.8 },
+          "-=0.6"
+        )
+        .fromTo(
+          ctaBtnRef.current,
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          "-=0.3"
+        )
+        .fromTo(
+          statsRef.current?.children ?? [],
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 },
+          "-=0.2"
+        )
+        .fromTo(
+          scrollHintRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6 },
+          "-=0.1"
+        );
+    })();
+
+    return () => { cancelled = true; };
   }, []);
 
   return (
@@ -106,7 +122,7 @@ export default function Home() {
         <section
           id="hero"
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-zinc-950 pt-16 md:pt-20"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-zinc-950 pt-8 sm:pt-12 md:pt-20"
         >
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-indigo-100/60 via-white to-white dark:from-indigo-950/40 dark:via-zinc-950 dark:to-zinc-950 z-10" />
@@ -125,11 +141,13 @@ export default function Home() {
               color2="rgba(59,130,246,0.1)"
               className="bottom-1/4 -left-1/4 w-[350px] h-[350px]"
             />
-            <HeroSphere />
+            <div className="hidden md:block absolute inset-0 z-0">
+              <HeroSphere />
+            </div>
           </div>
 
           <div className="relative z-0 flex flex-col items-center text-center px-6 max-w-4xl">
-            <div className="inline-flex items-center gap-3 rounded-full bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] px-5 py-2 mb-8 shadow-lg dark:shadow-none">
+            <div className="inline-flex items-center gap-3 rounded-full bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] px-4 py-1.5 mb-6 sm:px-5 sm:py-2 sm:mb-8 shadow-lg dark:shadow-none">
               <Image
                 src="/logo_sgf.webp"
                 alt="Sisprot Global Fiber"

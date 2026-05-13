@@ -9,6 +9,7 @@ export default function HeroSphere() {
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    if (window.innerWidth < 768) return;
 
     const scene = new THREE.Scene();
 

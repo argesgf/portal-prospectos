@@ -56,9 +56,10 @@ export default function ResumenPlanPage() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="mt-4 space-y-8"
           >
-            <PlanSummaryCard />
             <InstallationToggle />
             <FinancingSelector />
+            <PlanSummaryCard />
+
             <button
               onClick={() => router.push("/datos")}
               className="w-full py-4 rounded-xl text-base font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-600 hover:from-blue-800 hover:to-blue-700 text-white shadow-xl shadow-blue-700/30 hover:shadow-blue-700/50 dark:from-yellow-400 dark:to-amber-400 dark:hover:from-yellow-500 dark:hover:to-amber-500 dark:text-zinc-900 dark:shadow-yellow-400/30"
