@@ -64,9 +64,6 @@ export default function PlanSelector() {
   };
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (isMobile) return;
-
     let cancelled = false;
 
     (async () => {
@@ -143,7 +140,7 @@ export default function PlanSelector() {
   }, []);
 
   return (
-    <section id="planes" ref={sectionRef} className="relative py-24 md:py-32 bg-zinc-50 dark:bg-zinc-950 overflow-hidden">
+    <section id="planes" ref={sectionRef} className="relative py-14 sm:py-18 md:py-32 bg-zinc-50 dark:bg-zinc-950 overflow-hidden" style={{ contentVisibility: "auto" }}>
       <GradientBlob
         color1="rgba(79,70,229,0.3)"
         color2="rgba(124,58,237,0.15)"
@@ -156,9 +153,9 @@ export default function PlanSelector() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <div ref={headingRef} className="text-center mb-12">
+        <div ref={headingRef} className="text-center mb-8 sm:mb-10 md:mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-white leading-tight">
-            Elegí el plan{" "}
+            Elige el plan{" "}
             <span className="bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
               perfecto
             </span>
@@ -168,7 +165,7 @@ export default function PlanSelector() {
           </p>
         </div>
 
-        <div ref={tabsRef} className="flex justify-center mb-12">
+        <div ref={tabsRef} className="flex justify-center mb-8 sm:mb-10 md:mb-12">
           <div className="inline-flex rounded-full bg-white/60 dark:bg-white/[0.04] backdrop-blur-xl border border-white/20 dark:border-white/[0.06] p-1 shadow-lg dark:shadow-none">
             {tabs.map(({ value, label, icon: Icon }) => (
               <button

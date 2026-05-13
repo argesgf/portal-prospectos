@@ -65,9 +65,6 @@ export default function Home() {
   const scrollHintRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    if (isMobile) return;
-
     let cancelled = false;
 
     (async () => {
@@ -122,7 +119,7 @@ export default function Home() {
         <section
           id="hero"
           ref={heroRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-zinc-950 pt-8 sm:pt-12 md:pt-20"
+          className="relative min-h-[760px] md:min-h-screen flex items-start md:items-center justify-center overflow-hidden bg-white dark:bg-zinc-950 pt-20 md:pt-20"
         >
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-indigo-100/60 via-white to-white dark:from-indigo-950/40 dark:via-zinc-950 dark:to-zinc-950 z-10" />
@@ -141,7 +138,7 @@ export default function Home() {
               color2="rgba(59,130,246,0.1)"
               className="bottom-1/4 -left-1/4 w-[350px] h-[350px]"
             />
-            <div className="hidden md:block absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0">
               <HeroSphere />
             </div>
           </div>
@@ -154,6 +151,7 @@ export default function Home() {
                 width={30}
                 height={30}
                 className="rounded-lg shrink-0"
+                priority
               />
                 <span className="text-xs text-zinc-600 dark:text-zinc-400 font-medium tracking-wide">
                   <strong className="text-zinc-900 dark:text-white">Sisprot Global Fiber</strong> — Conectividad que transforma
@@ -222,7 +220,7 @@ export default function Home() {
 
             <div
               ref={statsRef}
-              className="mt-16 grid grid-cols-3 gap-x-12 gap-y-4 text-center"
+              className="mt-12 md:mt-16 grid grid-cols-3 gap-x-8 md:gap-x-12 gap-y-4 text-center"
             >
               {[
                 { value: "200+", label: "Localidades" },
