@@ -70,7 +70,7 @@ export default function ResumenPage() {
             className="anim-pop flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-yellow-400 text-white shadow-2xl shadow-blue-600/30 mb-6"
           >
             <CheckCircle2 size={42} />
-          </motion.div>
+          </div>
           <h2 className="text-3xl font-bold bg-gradient-to-r from-yellow-500 to-amber-500 bg-clip-text text-transparent">
             Contratación confirmada
           </h2>
